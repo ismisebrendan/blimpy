@@ -13,6 +13,7 @@ with open("README.md", "r") as fh:
 entry_points = {
     'console_scripts' : [
         'bldice = blimpy.dice:cmd_tool',
+        'bldice-time = blimpy.time_dice:cmd_tool',
         'bl_scrunch = blimpy.bl_scrunch:cmd_tool',
         'calcload = blimpy.calcload:cmd_tool',
         'dsamp = blimpy.dsamp:cmd_tool',
