@@ -162,7 +162,7 @@ def cmd_tool(args=None):
     # print "true stop time is " + str(t_stop_real)
 
     logger.info('Writing to ' + args.out_fname)
-    logger.info('Extacting from ' + str(t_start_real) + ' MHz to ' + str(t_stop_real) + ' MHz.')
+    logger.info('Extacting from ' + str(t_start_real) + ' s to ' + str(t_stop_real) + ' s.')
 
     # create waterfall object
     file_small = Waterfall(args.in_fname, t_start = t_start_real, t_stop = t_stop_real, max_load = args.max_load)
