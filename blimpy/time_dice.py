@@ -129,37 +129,37 @@ def cmd_tool(args=None):
     if t_end_file < t_start_file:
             t_end_file,t_start_file = t_start_file,t_end_file
 
-    FreqBWFile = t_end_file-t_start_file
-    stdDF = FreqBWFile / float(file_big.calc_n_coarse_chan())   #stdDF = 2.9296875
+    LengthTimeFile = t_end_file-t_start_file
+    stdDF = LengthTimeFile / float(file_big.header['nsamples'])
 
     if args.t_stop < args.t_start:
             args.t_stop,args.t_start = args.t_start,args.t_stop
 
     if args.t_start < t_end_file and args.t_start > t_start_file and args.t_stop > t_end_file:
             args.t_stop = t_end_file
-            logger.warning('Higher frequency set to ' + str(t_end_file) + ' MHz to match file.')
+            logger.warning('End time set to ' + str(t_end_file) + ' s to match file.')
 
     if args.t_stop < t_end_file and args.t_stop > t_start_file and args.t_start < t_start_file:
             args.t_start = t_start_file
-            logger.warning('Lower frequency set to ' + str(t_start_file) + ' MHz to match file.')
+            logger.warning('Start time set to ' + str(t_start_file) + ' s to match file.')
 
     if args.t_start < t_start_file and args.t_stop > t_end_file:
             args.t_start = t_start_file
             args.t_stop = t_end_file
-            logger.warning('Lower frequency set to ' + str(t_start_file) + ' MHz and higher frequency set to ' + str(t_end_file) + ' MHz to match file.')
+            logger.warning('Start time set to ' + str(t_start_file) + ' s and end time set to ' + str(t_end_file) + ' s to match file.')
             # print '\nindicated frequencies include file frequency span - no need to dice\n'
             # sys.exit()
 
     if min(args.t_start,args.t_stop) < t_start_file or max(args.t_start,args.t_stop) > t_end_file:
-            logger.error('Bandwidth to extract must be within ' + str(t_start_file) + ' MHz and ' + str(t_end_file) + ' MHz.')
+            logger.error('Time selection to extract must be within ' + str(t_start_file) + ' s and ' + str(t_end_file) + ' s.')
             sys.exit()
 
-    # calculate real coarse channel begin and end freqs
+    # calculate real sample start and end times
     t_start_real = math.floor((min(args.t_start,args.t_stop) - t_start_file)/stdDF)*stdDF + t_start_file
     t_stop_real = t_end_file - math.floor((t_end_file - max(args.t_start,args.t_stop))/stdDF)*stdDF
 
-    # print "true start frequency is " + str(t_start_real)
-    # print "true stop frequency is " + str(t_stop_real)
+    # print "true start time is " + str(t_start_real)
+    # print "true stop time is " + str(t_stop_real)
 
     logger.info('Writing to ' + args.out_fname)
     logger.info('Extacting from ' + str(t_start_real) + ' MHz to ' + str(t_stop_real) + ' MHz.')
